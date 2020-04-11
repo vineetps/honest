@@ -1,0 +1,32 @@
+namespace: honest
+replicaCount: 1
+
+image:
+  repository: itsvineetpal/honest
+  tag: latest
+  imagePullPolicy: IfNotPresent
+
+label:
+  app: honest
+
+containerPort: 8080
+
+service:
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+restartPolicy: Always
+strategy:
+  rollingUpdate:
+    maxSurge: 25%
+    maxUnavailable: 25%
+  type: RollingUpdate
