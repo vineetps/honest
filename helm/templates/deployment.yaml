@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.label.app }}
+  name: {{ .Values.label.app }}-dep
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.label.app }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.label.app }}
+    spec:
+      containers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: {{ .Values.label.app }}
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      restartPolicy: {{ .Values.restartPolicy }}
+      terminationGracePeriodSeconds: 10
