@@ -30,3 +30,8 @@ strategy:
     maxSurge: 25%
     maxUnavailable: 25%
   type: RollingUpdate
+
+hpa:
+  targetCPUUtilizationPercentage: 50
+  minReplicas : 1
+  maxReplicas: 5
